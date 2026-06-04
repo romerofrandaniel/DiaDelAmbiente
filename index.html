@@ -3,375 +3,340 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Invitación</title>
+
+<title>Día Mundial del Ambiente</title>
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: linear-gradient(#f3d6db, #e8cfd3);
-    overflow-x: hidden;
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
-/* CONTENEDOR */
-.container {
-    max-width: 420px;
-    margin: auto;
-    padding: 10px;
+body{
+    background:linear-gradient(135deg,#0b5d1e,#2e8b57);
+    color:white;
+    min-height:100vh;
 }
 
-/* TARJETAS */
-.card {
-    width: 100%;
-    border-radius: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    opacity: 0;
-    transform: translateY(40px) scale(0.95);
-    transition: all 1s ease;
+.pantalla{
+    display:none;
+    min-height:100vh;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:20px;
 }
 
-.card.show {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+.activa{
+    display:flex;
 }
 
-/* PORTADA */
-.portada {
-    position: relative;
+h1{
+    margin-bottom:30px;
+    text-align:center;
 }
 
-/* BOTON PLAY */
-#playBtn {
-    position: absolute;
-    bottom: 25px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 10;
+.opciones{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+    max-width:900px;
 }
 
-.play-svg {
-    width: 110px;
-    height: 110px;
+.opciones img{
+    width:100%;
+    max-width:350px;
+    border-radius:20px;
+    cursor:pointer;
+    border:5px solid transparent;
+    transition:.3s;
 }
 
-/* CONTENEDOR IMAGEN + CONTADOR */
-.card-con-contador {
-    position: relative;
+.opciones img:hover{
+    transform:scale(1.05);
+    border-color:white;
 }
 
-/* CONTADOR SOBRE IMAGEN */
-#countdown {
-    position: absolute;
-    bottom: 105px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    padding: 10px 22px;
-    border-radius: 30px;
-
-    /* 🎨 VERDE CLARO ELEGANTE (basado en tu imagen) */
-    background: rgba(168, 185, 155, 0.85);
-
-    backdrop-filter: blur(10px);
-
-    color: #ffffff;
-    font-size: 16px;
-    font-weight: 600;
-
-    white-space: nowrap;
-
-    box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-
-    /* 💎 toque premium */
-    border: 1px solid rgba(255,255,255,0.3);
+.formulario{
+    width:100%;
+    max-width:500px;
 }
 
-/* BOTONES */
-.btn {
-    display: block;
-    margin: 15px auto;
-    padding: 12px 20px;
-    background: linear-gradient(45deg, #a8e6cf, #7ed6c1);
-    color: white;
-    border-radius: 30px;
-    text-decoration: none;
-    text-align: center;
-    width: 70%;
+input{
+    width:100%;
+    padding:15px;
+    margin-bottom:15px;
+    border:none;
+    border-radius:10px;
 }
 
-/* WHATSAPP */
-.whatsapp {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #25D366;
-    color: white;
-    padding: 14px 20px;
-    border-radius: 30px;
-    text-decoration: none;
+button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:10px;
+    background:#00c853;
+    color:white;
+    font-size:18px;
+    cursor:pointer;
 }
 
-/* PARTICULAS */
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+button:hover{
+    background:#00e676;
 }
 
-.img-con-boton {
-    position: relative;
+.camera-container{
+    position:relative;
+    width:90vw;
+    max-width:900px;
+    aspect-ratio:3/4;
 }
 
-/* BOTON SOBRE LA IMAGEN */
-.btn-img {
-    position: absolute;
-    bottom: 140px; /* 👈 lo mueve arriba/abajo */
-    left: 50%;
-    transform: translateX(-50%);
-    
-    width: 50%;
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    cursor: pointer;
-    transition: 0.3s;
+video{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:20px;
 }
 
-.btn-img:hover {
-    transform: translateX(-50%) scale(1.05);
+.overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    pointer-events:none;
 }
 
+#contador{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:120px;
+    font-weight:bold;
+    text-shadow:0 0 30px black;
+}
 
+#resultado{
+    max-width:90%;
+    border-radius:20px;
+    margin-top:20px;
+}
 
-
- /* Footer */
-        .footer {
-            width: 100%;
-            max-width: 900px;
-            text-align: center;
-            margin-top: 50px;
-            padding: 30px 20px;
-            background-color: #f7f7f7;
-            border-top: 1px solid #eee;
-            border-radius: 12px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
-        }
-        .footer h2.italic {
-            font-style: italic;
-            font-size: 2.5em;
-            color: #555;
-            margin-bottom: 20px;
-        }
-        .footer .icon-placeholder { /* For the downward arrow */
-            font-size: 3em;
-            color: #8B8378;
-            margin: 20px 0;
-            display: block;
-        }
-        .footer p {
-            font-size: 1em;
-            color: #777;
-        }
-        .footer .small-text {
-            font-size: 0.85em;
-            margin-top: 20px;
-            color: #999;
-        }    
 </style>
 </head>
-
 <body>
 
-<canvas id="particles"></canvas>
+<!-- MENU -->
 
- 
-<audio id="musica" loop>
-    <source src="img/MusicaLili.mp3" type="audio/mpeg">
-</audio>
+<div id="pantalla1" class="pantalla activa">
 
-<div class="container">
+    <h1>🌎 Día Mundial del Ambiente</h1>
 
-<!-- PORTADA -->
-<div class="portada">
-    <img src="img/portadaA.jpg" class="card">
+    <div class="opciones">
 
-    <button id="playBtn">
-        <svg class="play-svg" viewBox="0 0 200 200">
-            <circle cx="100" cy="100" r="50" fill="#5f7f6d"/>
-            <polygon points="90,80 90,120 120,100" fill="white"/>
-        </svg>
+        <img src="img/opcion1.png" onclick="seleccionarMarco('img/marco1.gif')">
+
+        <img src="img/opcion2.png" onclick="seleccionarMarco('img/marco2.gif')">
+
+        <img src="img/opcion3.png" onclick="seleccionarMarco('img/marco3.gif')">
+
+        <img src="img/opcion4.png" onclick="seleccionarMarco('img/marco4.gif')">
+
+    </div>
+
+</div>
+
+<!-- DATOS -->
+
+<div id="pantalla2" class="pantalla">
+
+    <h1>Ingresa tus datos</h1>
+
+    <div class="formulario">
+
+        <input id="nombre" placeholder="Nombre completo">
+
+        <input id="correo"
+               type="email"
+               placeholder="Correo electrónico">
+
+        <button onclick="abrirCamara()">
+            Continuar
+        </button>
+
+    </div>
+
+</div>
+
+<!-- CAMARA -->
+
+<div id="pantalla3" class="pantalla">
+
+    <div class="camera-container">
+
+        <video id="video"
+               autoplay
+               playsinline>
+        </video>
+
+        <img id="overlay"
+             class="overlay">
+
+        <div id="contador"></div>
+
+    </div>
+
+</div>
+
+<!-- RESULTADO -->
+
+<div id="pantalla4" class="pantalla">
+
+    <h1>¡Tu foto está lista!</h1>
+
+    <img id="resultado">
+
+    <br><br>
+
+    <button onclick="descargarFoto()">
+        Descargar Foto
     </button>
-</div>
-
-<img src="img/1119.jpg" class="card">
-<img src="img/Foto.jpg" class="card">
-
-<!-- IMAGEN CON CONTADOR -->
-<div class="card-con-contador">
-    <img src="img/446.jpg" class="card show">
-    <div id="countdown"></div>
-</div>
-
-
-    
-    <div class="img-con-boton">
-    
-    <img src="img/58.jpg" class="card show">
-
-    <a href="https://maps.google.com/?q=Santuario+Inmaculada+Concepcion+Barranqueras" target="_blank">
-        <img src="img/BotonIglesiaA.png" class="btn-img" style="
-         border-radius: 20px;
-         box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-         -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
-         mask-image: radial-gradient(circle at center, black 65%, transparent 100%); " >
-    </a>
 
 </div>
-
-
-
- <div class="img-con-boton">
-    
-    <img src="img/467.png" class="card show">
-
-    <a href="https://www.google.com.ar/maps/dir/-27.4857984,-58.9529088/Salon+De+Fiesta+Gauna,+Puerto+Vilelas,+Chaco/" target="_blank">
-    <img src="img/BotonIglesiaB.png" 
-         class="btn-img"
-         style="
-         border-radius: 20px;
-         box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-         -webkit-mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
-         mask-image: radial-gradient(circle at center, black 65%, transparent 100%);
-         ">
-</a>
-</div>
-    
-   
-
-    
-    
-    
-    <img src="img/6.jpg" class="card">
-    <img src="img/77.jpg" class="card">
-   <!-- <img src="img/8.jpg" class="card show"> -->
-    <img src="img/103.jpg" class="card">
-    
-<img src="img/136.jpg" class="card">
-
-<img src="img/109.jpg" class="card">
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-</div>
-
-<a href="https://wa.me/54 3624506694?text=Confirmo%20mi%20asistencia%20a%20la%20boda" 
-   target="_blank"
-   style="
-   position: fixed;
-   bottom: 20px;
-   right: 20px;
-   background: #6f7f6f; /* 🎨 verde oliva de tu imagen */
-   color: white;
-   padding: 14px 20px;
-   border-radius: 30px;
-   text-decoration: none;
-   box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-   ">
-   Confirmar
-</a>
 
 <script>
-// AUDIO
-const btn = document.getElementById("playBtn");
-const audio = document.getElementById("musica");
 
-btn.onclick = () => {
-    if (audio.paused) audio.play();
-    else audio.pause();
-};
+let marcoSeleccionado="";
+let fotoFinal="";
 
-// CONTADOR (UNA LINEA)
-const fecha = new Date("May 9, 2026 21:00:00").getTime();
+function cambiarPantalla(id){
 
-setInterval(() => {
-    const ahora = new Date().getTime();
-    const d = fecha - ahora;
+    document
+    .querySelectorAll(".pantalla")
+    .forEach(p=>p.classList.remove("activa"));
 
-    let dias = Math.floor(d / (1000*60*60*24));
-    let h = Math.floor((d%(1000*60*60*24))/(1000*60*60));
-    let m = Math.floor((d%(1000*60*60))/(1000*60));
-    let s = Math.floor((d%(1000*60))/1000);
-
-    document.getElementById("countdown").innerHTML =
-        `${dias}d ${h}h ${m}m ${s}s`;
-}, 1000);
-
-// SCROLL
-const els = document.querySelectorAll(".card");
-
-const show = () => {
-    const t = window.innerHeight * 0.85;
-    els.forEach(el => {
-        if (el.getBoundingClientRect().top < t) {
-            el.classList.add("show");
-        }
-    });
-};
-
-window.addEventListener("scroll", show);
-window.addEventListener("load", show);
-
-// PARTICULAS
-const canvas = document.getElementById("particles");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-
-for (let i = 0; i < 50; i++) {
-    particles.push({
-        x: Math.random()*canvas.width,
-        y: Math.random()*canvas.height,
-        r: Math.random()*3,
-        d: Math.random()*2
-    });
+    document
+    .getElementById(id)
+    .classList.add("activa");
 }
 
-function draw() {
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    ctx.fillStyle = "rgba(212,175,55,0.6)";
+function seleccionarMarco(ruta){
 
-    particles.forEach(p => {
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fill();
+    marcoSeleccionado=ruta;
 
-        p.y += p.d;
-        if (p.y > canvas.height) p.y = 0;
-    });
-
-    requestAnimationFrame(draw);
+    cambiarPantalla("pantalla2");
 }
 
-draw();
+async function abrirCamara(){
+
+    let nombre=
+        document.getElementById("nombre").value;
+
+    let correo=
+        document.getElementById("correo").value;
+
+    if(nombre==="" || correo===""){
+
+        alert("Completa todos los datos");
+        return;
+    }
+
+    cambiarPantalla("pantalla3");
+
+    document
+    .getElementById("overlay")
+    .src=marcoSeleccionado;
+
+    const stream=
+        await navigator.mediaDevices.getUserMedia({
+            video:true
+        });
+
+    video.srcObject=stream;
+
+    iniciarCuenta();
+}
+
+async function iniciarCuenta(){
+
+    const contador=
+        document.getElementById("contador");
+
+    for(let i=3;i>=1;i--){
+
+        contador.innerHTML=i;
+
+        await new Promise(r=>
+            setTimeout(r,1000)
+        );
+    }
+
+    contador.innerHTML="";
+
+    sacarFoto();
+}
+
+function sacarFoto(){
+
+    const video=
+        document.getElementById("video");
+
+    const overlay=
+        document.getElementById("overlay");
+
+    const canvas=
+        document.createElement("canvas");
+
+    canvas.width=1080;
+    canvas.height=1440;
+
+    const ctx=
+        canvas.getContext("2d");
+
+    ctx.drawImage(
+        video,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    ctx.drawImage(
+        overlay,
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    fotoFinal=
+        canvas.toDataURL("image/png");
+
+    document
+        .getElementById("resultado")
+        .src=fotoFinal;
+
+    cambiarPantalla("pantalla4");
+}
+
+function descargarFoto(){
+
+    const a=
+        document.createElement("a");
+
+    a.href=fotoFinal;
+
+    a.download=
+        "DiaDelAmbiente.png";
+
+    a.click();
+}
+
 </script>
 
 </body>
