@@ -281,21 +281,21 @@ async function iniciarCuenta(){
     sacarFoto();
 }
 
-function sacarFoto(){
+async function sacarFoto(){
 
-    const video=
+    const video =
         document.getElementById("video");
 
-    const overlay=
+    const overlay =
         document.getElementById("overlay");
 
-    const canvas=
+    const canvas =
         document.createElement("canvas");
 
-    canvas.width=1080;
-    canvas.height=1440;
+    canvas.width = 1080;
+    canvas.height = 1440;
 
-    const ctx=
+    const ctx =
         canvas.getContext("2d");
 
     ctx.drawImage(
@@ -314,17 +314,86 @@ function sacarFoto(){
         canvas.height
     );
 
-    fotoFinal=
+    fotoFinal =
         canvas.toDataURL("image/png");
 
     document
         .getElementById("resultado")
-        .src=fotoFinal;
+        .src = fotoFinal;
+
+    try{
+
+        document.getElementById("contador").innerHTML =
+            "Enviando...";
+
+        const respuesta =
+            await fetch(
+                "http://localhost:3000/enviar-foto",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                        "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        nombre:
+                            document
+                            .getElementById(
+                                "nombre"
+                            ).value,
+
+                        email:
+                            document
+                            .getElementById(
+                                "correo"
+                            ).value,
+
+                        imagen:
+                            fotoFinal
+
+                    })
+                }
+            );
+
+        const resultado =
+            await respuesta.json();
+
+        console.log(resultado);
+
+        if(resultado.ok){
+
+            alert(
+                "✅ La foto fue enviada correctamente al correo."
+            );
+
+        }else{
+
+            alert(
+                "❌ No se pudo enviar el correo."
+            );
+
+        }
+
+    }
+    catch(error){
+
+        console.log(error);
+
+        alert(
+            "❌ Error al conectar con el servidor."
+        );
+
+    }
+
+    document.getElementById("contador").innerHTML =
+        "";
 
     cambiarPantalla("pantalla4");
 }
-
-function descargarFoto(){
+    function descargarFoto(){
 
     const a=
         document.createElement("a");
